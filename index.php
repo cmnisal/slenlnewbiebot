@@ -77,10 +77,9 @@ function send_response($input_raw) {
     }
 	if (array_key_exists('new_chat_participant', $messageobj['message']) && $messageobj['message']['new_chat_participant']['first_name'] !== 'SL ENL Newbie') {	
 	$newcomer = $messageobj['message']['new_chat_participant']['first_name']." ".$messageobj['message']['new_chat_participant']['last_name'];
-	$reply = urlencode('Hello *'.$newcomer.',*	
+	$reply = urlencode('Hello *'.$newcomer.',*	😃
 We\'re glad that you\'ve joined our faction!
-In order to receive the beginner\'s guide 
-please type ``` /guide <your email address> ``` and send.
+In order to receive the beginner\'s guide please type ``` /guide <your email address> ``` and send.
 Thank you!');
 	if($username==""){
 		$reply .= "Please set your agent name as your username on Telegram.";
