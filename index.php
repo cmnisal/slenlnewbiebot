@@ -3,7 +3,6 @@
 /**
  * Bot that helps set up a farming session for the Sri Lankan Ingress Enlightened.
  */
-
 function build_response($chat_id, $text) {
     $returnvalue = 'https://api.telegram.org/bot180563680:AAGFLwqusmhx9Y3Ep6BebyimlUb-vA6ZEm8/sendMessage?chat_id='
             . $chat_id . '&text=' . $text . '&disable_web_page_preview=true&parse_mode=markdown';
@@ -61,24 +60,29 @@ function send_response($input_raw) {
     //check for swear words
     foreach ($swears as $swear) {
         if (strpos($messageobj['message']['text'], $swear) !== false) {
-            $reply = urlencode('යක�? මේක හදල තියෙන්නෙ ගොන් ආතල් ගන්න නෙවේ. ගොන් ආතල් ගන්න ඕන නම් මෑඩ් හව්ස් එකට පලයන්.');
+            $reply = urlencode('යකෝ? මේක හදල තියෙන්නෙ ගොන් ආතල් ගන්න නෙවේ. ගොන් ආතල් ගන්න ඕන නම් මෑඩ් හව්ස් එකට පලයන්.');
             send_curl(build_response($chat_id, $reply));
+            //echo $reply;
             return;
         }
     }
-    
-    $isBot =  (substr(strtolower($messageobj['message']['new_chat_participant']['username'], - 3)) === "bot");
-    
-    if (array_key_exists('new_chat_participant', $messageobj['message']) && !$isBot) {
+
+    $isBot = (substr(strtolower($messageobj['message']['new_chat_participant']['username']), - 3) === "bot");
+
+    if (array_key_exists('new_chat_participant', $messageobj['message'])) {
         $newcomer = $messageobj['message']['new_chat_participant']['first_name'] . " " . $messageobj['message']['new_chat_participant']['last_name'];
-        $reply = urlencode('Hello *' . $newcomer . ',*	😃
+		$w = array("Hey ","Hello ","Howdy ","Yo ","Greetings ");
+		$e = array(" 😇"," 😎"," 😃"," 👏🏻");
+        $reply = $w[array_rand($w)]."*".$newcomer."*".$e[array_rand($e)].",";
+        $reply .= urlencode('
 We\'re glad that you\'ve joined our faction!
-In order to receive the beginner\'s guide please type ``` /guide <your email address> ``` and send.
-Thank you!');
-        if (!array_key_exists('username', $messageobj['message']['from'])) {
+In order to receive the beginner\'s guide please type ```/guide <your email address> ``` and send.');
+        if (!array_key_exists('username', $messageobj['message']['new_chat_participant'])) {
             $reply .= urlencode("
 Please set your agent name as your *username* on Telegram.");
-        }
+        }$reply .= urlencode("
+Thank you!");
+
         send_curl(build_response($chat_id, $reply));
         return;
     }
