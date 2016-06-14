@@ -82,6 +82,9 @@ We\'re glad that you\'ve joined our faction!
 In order to receive the beginner\'s guide 
 please type ``` /guide <your email address> ``` and send.
 Thank you!');
+	if($username==""){
+		$reply .= "Please set your agent name as your username on Telegram.";
+		}
 	send_curl(build_response($chat_id, $reply));
 		return;
 	}
