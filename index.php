@@ -76,7 +76,7 @@ function send_response($input_raw) {
         $reply = $w[array_rand($w)]."*".$newcomer."*".$e[array_rand($e)].",";
         $reply .= urlencode('
 We\'re glad that you\'ve joined our faction!
-In order to receive the beginner\'s guide please type ```/guide <your email address> ``` and send.');
+In order to receive the beginner\'s guide please type ```/guide <your email address>``` and send.');
         if (!array_key_exists('username', $messageobj['message']['new_chat_participant'])) {
             $reply .= urlencode("
 Please set your agent name as your *username* on Telegram.");
@@ -95,7 +95,7 @@ Please enter Valid E-mail address.
 Thank you!');
             send_curl(build_response($chat_id, $reply));
             return;
-        }
+        }else{
 
         $reply = urlencode('*Cool* ğŸ˜
 You\'ll receive the *guide* within few hours! ğŸ‘? ');
@@ -103,7 +103,7 @@ You\'ll receive the *guide* within few hours! ğŸ‘? ');
         $reply = urlencode(substr($messageobj['message']['text'], 6));
         send_curl(build_response(-1001069490161, $reply)); //Newbie Mails Channel
         send_curl(build_response(70414867, $reply)); //JR
-
+		}
 
         return;
     }
